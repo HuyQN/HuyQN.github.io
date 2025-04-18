@@ -257,7 +257,12 @@
     function loadmore(items, hold_id){
       holder = d3.select(hold_id)
       curr_items = d3.selectAll(hold_id).selectAll(".review").size()
-      for(i=curr_items; i < Math.min(curr_items+5, items.length); i++){
+      for(var i=curr_items; i < Math.min(curr_items+5, items.length); i++){
+        console.log(i, items.length)
+        if(i>=items.length){
+          console.log("break")
+          break
+        }
         if(Object.keys(items[0]).includes("review_id")){
           var rev = holder.append("div")
           .attr("class","review")
@@ -274,11 +279,18 @@
           rev.append("text")
           .text(items[i]["text"])
         } else{
+          console.log(i, items.length)
         var rev = holder.append("div")
           .attr("class","review")
           .append("div")
           .attr("class", "inner_review")
-          .on("click", function(d){clickBusiness(items[i]["business_id"])})
+          .attr("onClick", "clickBusiness('"+items[i]['business_id']+"')")
+          
+          // function(d){
+          //   console.log(i, Math.min(curr_items+5, items.length),items)
+          //   var busname =  items[i]["business_id"]
+          //   console.log(busname)
+          //   clickBusiness(busname)})
           rev.append("h2")
             .style("color","blue")
             .text(items[i]["name"])
