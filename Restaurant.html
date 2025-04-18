@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script type="text/javascript" src="/lib/d3.layout.cloud.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <style>
     body{
@@ -48,7 +49,7 @@
       top: 10px;
       right: 20px;
     }
-    #cloud_border{
+    .cloud_box{
       background-color: gray;
       width: calc(100% - 450px);
       height: calc(100% - 130px);
@@ -94,7 +95,7 @@
       position:absolute;
       top:40px;
     }
-    #cat_name{
+    .rest_name{
       top: 5px;
       text-align: center;
       width: 100%;
@@ -114,15 +115,15 @@
       height: 200px;
       border-bottom: 2px solid black;
     }
-    #cat_box{
+    .rest_box{
       width:100%;
       height: 75px;
     }
     h3{
       margin:0px;
     }
-    .clear_reviews{
-
+    .cloud{
+      z-index: 50;
     }
     
   </style>   
@@ -138,14 +139,14 @@
     let left_items
     let default_items
     let state = 0
+    let extra_items
+    let half_height = "calc(50% - 70px)"
     const urlpara = new URLSearchParams(window.location.search)
     let city = urlpara.get("city")
     var categories = ["All","Italian","Indian","Chinese","Thai","Ethiopian"]
-    var load_cities =  d3.json("/data/cities.json")
-    var load_csv =  d3.csv("/data/"+city+"/Businesses.csv")
-	console.log("/data/"+city+"/Businesses.csv")
-    var load_default_reviews =  d3.csv("/data/"+city+"/Default_Reviews
-	console.log().csv")
+    var load_cities =  d3.json("data/Cities.json")
+    var load_csv =  d3.csv("data/"+city+"/Businesses.csv")
+    var load_default_reviews =  d3.csv("data/"+city+"/Default_Reviews.csv")
     Promise.all([load_cities, load_csv, load_default_reviews]).then(function(d){
       const city_json = d[0]
       const coord = city_json[city]["coordinates"]
@@ -161,14 +162,16 @@
                   .on("scroll", function(){
                     var diff = this.scrollHeight-this.scrollTop-this.clientHeight;
                     if(diff <= 0){
-                      loadmore(left_items)
+                      loadmore(left_items, "#holder1")
                     }
                   })
       var cat_box = review_d3.append("div")
             .attr("id","cat_box")
+            .attr("class","rest_box")
 
         cat_box.append("text")
             .attr("id","cat_name")
+            .attr("class", "rest_name")
             .text("All")
 
       // var options = cat_box.append("input")
@@ -190,6 +193,7 @@
       var cloud_border = d3.select("body")
                   .append("div")
                   .attr("id","cloud_border")
+                  .attr("class", "cloud_box")
       map_d3 =map_border.append("div")
                   .attr("id","map")
       map_border.append("button")
@@ -207,7 +211,7 @@
       for(const bus in bus_list.slice(0, -1)){
         markBusiness(map, bus_list[bus])
       }
-      loadmore(left_items)
+      loadmore(left_items, "#holder1")
     })
 
 
@@ -242,7 +246,7 @@
         d3.selectAll(".review")
           .remove()
         setTimeout(function() {
-          loadmore(left_items)
+          loadmore(left_items, "#holder1")
           }, 100
         );
       } else if(state == 2){
@@ -250,11 +254,12 @@
       }
     }
 
-    function loadmore(left_items){
-      curr_items = d3.selectAll(".review").size()
-      for(i=curr_items; i < Math.min(curr_items+5, left_items.length); i++){
-        if(Object.keys(left_items[0]).includes("review_id")){
-          var rev = review_d3.append("div")
+    function loadmore(items, hold_id){
+      holder = d3.select(hold_id)
+      curr_items = d3.selectAll(hold_id).selectAll(".review").size()
+      for(i=curr_items; i < Math.min(curr_items+5, items.length); i++){
+        if(Object.keys(items[0]).includes("review_id")){
+          var rev = holder.append("div")
           .attr("class","review")
           .append("div")
           .attr("class", "inner_review")
@@ -262,24 +267,24 @@
           .append("h3")
           .attr("text-anochor", "right")
           .style("float","right")
-          .text(left_items[i]["sentiment"])
+          .text(items[i]["sentiment"])
           rev.append("h3")
-          .text(left_items[i]["username"])
+          .text(items[i]["username"])
           .style("width","75%")
           rev.append("text")
-          .text(left_items[i]["text"])
+          .text(items[i]["text"])
         } else{
-        var rev = review_d3.append("div")
+        var rev = holder.append("div")
           .attr("class","review")
           .append("div")
           .attr("class", "inner_review")
-          .on("click", function(d){clickBusiness(left_items[i]["business_id"])})
+          .on("click", function(d){clickBusiness(items[i]["business_id"])})
           rev.append("h2")
             .style("color","blue")
-            .text(left_items[i]["name"])
+            .text(items[i]["name"])
           rev.append("h3")
             .style("color","blue")
-            .text(left_items[i]["address"])
+            .text(items[i]["address"])
           var rev_svg = rev.append("svg")
           .attr("width","100%")
           rev_svg.append("rect")
@@ -287,12 +292,12 @@
           .attr("height","30px")
           .style("fill","red")
           rev_svg.append("rect")
-          .attr("width",(left_items[i]["sentiment"])+"%")
+          .attr("width",(items[i]["sentiment"])+"%")
           .attr("height","30px")
           .attr("z-index","101")
           .style("fill","green")
           rev_svg.append("text")
-          .text(left_items[i]["sentiment"])
+          .text(items[i]["sentiment"])
           .attr("text-anochor", "left")
           .attr("z-index","102")
           .attr("x","50%")
@@ -303,22 +308,50 @@
 
         }
       }
-      if(Object.keys(left_items[0]).includes("review_id")){
-        review_d3.selectAll("button")
+      if(Object.keys(items[0]).includes("review_id")){
+        holder.selectAll("button")
         .data([1])
         .enter()
         .append("button")
         .attr("class","btn")
         .attr("id","rev_button")
+        .attr("onClick","defaultReviews('"+hold_id+"')")
         .append("i")
         .attr("class","fa fa-close")
-        .attr("onClick","defaultReviews()")
       }
     }
-    
-    function clearCloud(){
-      d3.select(".cloud")
-        .remove()
+
+    function extra_reviews(items, business_name){
+      review_d3 = d3.select("body")
+                  .append("div")
+                  .attr("class","reviews_holder")
+                  .style("height", half_height)
+                  .style("top", "calc(50% + 65px)")
+                  .attr("id","holder2")
+                  .on("scroll", function(){
+                    var diff = this.scrollHeight-this.scrollTop-this.clientHeight;
+                    if(diff <= 0){
+                      loadmore(items, "#holder2")
+                    }
+          })
+          var cloud_border2 = d3.select("body")
+                  .append("div")
+                  .attr("id","cloud_border2")
+                  .attr("class", "cloud_box")
+                  .style("height", half_height)
+                  .style("top", "calc(50% + 65px)")
+
+          var cat_box = review_d3.append("div")
+            .attr("id","cat_box2")
+            .attr("class","rest_box")
+
+        cat_box.append("text")
+            .attr("id","cat_name2")
+            .attr("class","rest_name")
+            .text(business_name)
+         loadmore(items, "#holder2") 
+          bus = bus_list.find((item) => item["name"]==business_name)
+         create_cloud("#cloud_border2", bus["business_id"], "#holder2")
     }
     
     function markBusiness(map, business){
@@ -326,33 +359,45 @@
     }
 
     function clickBusiness(business){
+      var bus = bus_list.find((item) => item["business_id"]==business)
+      var path = "./data/"+city+"/"+bus["business_id"]+"_Reviews.csv"
       if(state == 0){
-        bus = bus_list.find((item) => item["business_id"]==business)
         map.panTo([bus["latitude"], bus["longitude"]])
-        var path = "./data/"+city+"/"+bus["business_id"]+"_Reviews.csv"
         d3.select("#cat_name")
           .text(bus["name"])
         d3.csv(path).then(function(d){
-          left_items = d.sort(function(a,b){
+             left_items = d.sort(function(a,b){
             return parseFloat(b["sentiment"])-parseFloat(a["sentiment"])
           })
           clear_reviews()
           state =1
+          create_cloud("#cloud_border", bus["business_id"], "#holder1")
         })
       } else if (state == 1){
-        console.log("test")
-        half_screen()
-        state = 2
+        if(d3.select("#cat_name").text() != bus["name"]){
+          half_screen(business)
+          d3.csv(path).then(function(d){
+              extra_items = d.sort(function(a,b){
+              return parseFloat(b["sentiment"])-parseFloat(a["sentiment"])
+            })
+            state = 2
+            extra_reviews(extra_items, bus["name"])
+          })
+        }
       }
     }
 
-    function defaultReviews(){
+    function defaultReviews(hold_id){
       if(state == 1){
         d3.selectAll(".review")
           .remove()
+        d3.selectAll(".cloud")
+          .remove()
+        d3.select("#cloudsvg")
+          .remove()
         left_items = default_items
         setTimeout(function() {
-          loadmore(left_items)
+          loadmore(left_items, hold_id)
           d3.select("#cat_name")
             .text("All")
           d3.select("#rev_button")
@@ -361,25 +406,157 @@
         );
         state = 0
       } else if (state == 2){
-        full_screen("tester")
+        full_screen(hold_id)
+        state = 1
       }
     }
 
-    function half_screen(){
+    function cloudWordClicked(word, reviews_id){
+      var items 
+      if(reviews_id == "#holder2"){
+        items = extra_items
+      } else {
+        items = left_items
+      }
+      var filtered = items.filter(function(tokens){
+        return tokens["tokenize"].includes(word)
+      })
+      var holder = d3.select(reviews_id)
+      if(d3.select("#"+word+reviews_id.substring(1)).style("fill") == "blue"){
+        d3.select("#"+word+reviews_id.substring(1))
+        .style("fill", "black")
+
+        holder.selectAll(".review")
+          .remove()
+        setTimeout(function() {
+          loadmore(items, reviews_id)
+          }, 100
+        );
+
+        holder
+        .on("scroll", function(){
+            var diff = this.scrollHeight-this.scrollTop-this.clientHeight;
+            if(diff <= 0){
+              loadmore(items, reviews_id)
+            }
+          })
+      } else {
+        d3.selectAll(".word"+reviews_id.substring(1))
+        .style("fill", "black")
+       d3.select("#"+word+reviews_id.substring(1))
+        .style("fill", "blue")
+        holder.selectAll(".review")
+          .remove()
+        setTimeout(function() {
+          loadmore(filtered, reviews_id)
+          }, 100
+        );
+
+        holder
+        .on("scroll", function(){
+            var diff = this.scrollHeight-this.scrollTop-this.clientHeight;
+            if(diff <= 0){
+              loadmore(filtered, reviews_id)
+            }
+          })
+      }
+
+    }
+
+    function half_screen(business){
       if(state == 1){
         d3.select("#holder1")
-          .style("height", "calc(50% - 130px)")
+          .style("height", half_height)
+        d3.select("#cloud_border")
+          .style("height", half_height)
       }
     }
 
     function full_screen(holder){
       if(state ==2){
-        d3.select("#holder1")
+        if(holder == "#holder2"){
+          d3.select("#holder1")
+            .style("height", "calc(100% - 130px)")
+          d3.select("#cloud_border")
           .style("height", "calc(100% - 130px)")
-        d3.select("#holder2")
-          .remove()
-        state = 1
+          d3.select("#holder2")
+            .remove()
+          d3.select("#cloud_border2")
+            .remove()
+          state = 1
+        } else {
+          d3.select("#holder1")
+            .remove()
+          d3.select("#cloud_border")
+            .remove()
+          d3.select("#holder2")
+            .style("top", "125px")
+            .style("height", "calc(100% - 130px)")
+            .attr("id", "holder1")
+          d3.select("#rev_button")
+            .attr("onclick","defaultReviews('#holder1')")
+          d3.select("#cloud_border2")
+            .style("top", "125px")
+            .style("height", "calc(100% - 130px)")
+            .attr("id", "cloud_border")
+          d3.select("#cat_name2")
+            .attr("id", "cat_name")
+          d3.select("#cat_box2")
+            .attr("id", "cat_box")
+          state = 1
+        }
       }
+    }
+
+    function create_cloud(holder, business_id, reviews_id){
+      d3.csv("data/"+city+"/"+business_id+"_Cloud.csv").then(function(d){
+        var sortest_list = d.map(function(data){
+          return [data["token"], data["frequency"]]
+        })
+        console.log(sortest_list)
+        var cloud = d3.select(holder)
+          .append("svg")
+          .attr("id","cloudsvg")
+          .attr("width", "100%")
+          .attr("height", "100%")
+          .append("g")
+        var layout = d3.layout.cloud()
+          .size([1300,400])
+          .words(sortest_list.map(function(d){ return {text: d[0]}}))
+          .padding(5)
+          .fontSize(function(d) { 
+            size = sortest_list.find((item) => item[0]==d.text)[1]
+            size = Math.sqrt(size) * 6 + 20
+            return size})
+          .on("end", function(d){ draw(d,cloud, layout, reviews_id)})
+          layout.start()
+          // cloud.transition()
+          //       .duration(600)
+          //       .style("font-size", function(d) { return d[1] + "px"; })
+          //       .attr("transform", function(d) {
+          //           return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+          //       })
+          //       .style("fill-opacity", 1);
+      })
+    }
+
+    function draw(words, svg, layout, reviews_id){
+      svg.append("g")
+      .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+       .selectAll("text")
+        .data(words)
+        .enter()
+        .append("text")
+        .style("font-family", "Impact")
+        .style("font-size", function(d) { return d.size + "px"; })
+        .attr("text-anchor", "middle")
+        .attr("class", "word"+reviews_id.substring(1))
+        .attr("id",function(d){return d.text+reviews_id.substring(1)})
+        .on("click",function(d){cloudWordClicked(d.text, reviews_id)})
+        .attr("transform", function(d) {
+          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        })
+        .text(function(d) { return d.text; });
     }
   </script>
 </body>
