@@ -1,1 +1,167 @@
-Work in Progress
+<!DOCTYPE html>
+
+<head>
+  <title>CS6242 Team 37</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <style>
+    .map { 
+      height: 250px; 
+      width: 400px;
+    }
+    .city {
+      height: 250px;
+      width: 600px;
+    }
+    body{
+      background-color: beige;
+    }
+    h1{
+      font-size: 100px;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    input{
+      position: relative;
+      left: 50%;
+      margin-left: -250px;
+      width: 500px;
+    }
+    rect{
+      stroke: black;
+      fill: yellow;
+    }
+    .clickDiv{
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+    .bars{
+      float:left;
+    }
+  </style>
+</head>
+
+<body>
+  <script type="text/javascript" src="/lib/d3.v5.min.js"></script>
+  <h1>Team 37</h1>
+    <script>
+      var city_path = "/data/Cities.json"
+      var heights = 250
+
+      var box_spots = [{"top": "300px", "left": "50px"},
+        {"top": "300px", "left": "650px"},
+        {"top": "300px", "left": "1250px"},
+        {"top": "600px", "left": "50px"},
+        {"top": "600px", "left": "650px"},
+        {"top": "600px", "left": "1250px"}
+      ]
+
+      // replaced by csv or json function transformation
+      var rectFiller = [{"name": "f1", "val": 90},
+        {"name": "f2", "val": 80},
+        {"name": "f3", "val": 70},
+        {"name": "f4", "val": 60},
+        {"name": "f5", "val": 50}
+      ]
+      var rectPadding = 5
+      var rectHeight = (heights-(rectPadding*6))/5
+      var rectPos = []
+      for(count=0; count<5;count++){
+        rectPos[count] = rectPadding + count * (rectHeight + rectPadding)
+      }
+      d3.json(city_path)
+        .then(data => { 
+
+          positions = {}
+          var city_list = Object.keys(data)
+          for(const count in city_list){
+            city = city_list[count]
+            positions[city] = box_spots[count]
+          }
+          var div = d3.select("body")
+            .selectAll("div")
+            .data(city_list)
+            .enter()
+            .append("div")
+            .attr("class", "city")
+            .style("position","absolute")
+            .style("top", function(d){ return positions[d].top})
+            .style("left", function(d){ return positions[d].left})
+          div.append("div")
+            .attr("class", "map")
+            .attr("id", function(d){ return d})
+            .append("a")
+            .attr("href", function(d){return "Restaurant.html?city="+d})
+            .attr("class", "clickDiv")
+          var map_svg = div.append("svg")
+            .attr("transform", "translate("+405+",-"+heights+")")
+            .attr("class","bars")
+            .attr("width", 200)
+            .attr("height", heights)
+            map_svg.append("g")
+              .selectAll("rect")
+            .data(function(d){ 
+              var top_cats = data[d]["top_categories"]
+              var ret = []
+              for(const num in top_cats){
+                ret[num] = [num, top_cats[num]]
+              }
+              return ret
+            })
+            .enter()
+            .append("rect")
+            .attr("y", function(d){return rectPadding + d[0] * (rectHeight + rectPadding) })
+            .attr("width", function(d){
+              // TODO: change for incoming value and acccount for year
+              return d[1][1]
+            })
+            .attr("height", rectHeight)
+            map_svg.append("g")
+            .selectAll("text")
+            .data(function(d){ 
+              var top_cats = data[d]["top_categories"]
+              var ret = []
+              for(const num in top_cats){
+                ret[num] = [num, top_cats[num]]
+              }
+              return ret
+            })
+            .enter()
+            .append("text")
+            .attr("y", function(d){return rectPadding + d[0] * (rectHeight + rectPadding) + rectHeight / 2 + 5}) 
+            .attr("x", 5)
+            .text(function(d){return d[1][1]})
+            .attr("text-anchor", "left")
+
+            map_svg.append("g")
+            .selectAll("text")
+            .data(function(d){ 
+              var top_cats = data[d]["top_categories"]
+              var ret = []
+              for(const num in top_cats){
+                ret[num] = [num, top_cats[num]]
+              }
+              return ret
+            })
+            .enter()
+            .append("text")
+            .attr("y", function(d){return rectPadding + d[0] * (rectHeight + rectPadding) + rectHeight / 2 + 5}) 
+            .attr("x", function(d){return d[1][1]+5})
+            .text(function(d){return d[1][0]})
+            .attr("text-anchor", "left")
+
+          for(count = 0; count < city_list.length; count++){
+            map_id = city_list[count]
+            coordinates = data[map_id]["coordinates"]
+            var map = L.map(map_id).setView(coordinates, 11);
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              maxZoom: 17,
+              minZoom: 10,
+              attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
+          }
+      })
+    </script>
+</body>

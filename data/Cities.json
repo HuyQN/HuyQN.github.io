@@ -1,0 +1,8 @@
+{
+	"Indianapolis": {"coordinates":[39.76838, -86.15804], "top_categories":[["Filler1", 90],["Filler2",80],["Filler3",70],["Filler4",60],["Filler5", 50]]},
+	"New Orleans": {"coordinates":[29.95465, -90.07507], "top_categories":[["Filler1", 90],["Filler2",80],["Filler3",70],["Filler4",60],["Filler5", 50]]},
+	"Nashville": {"coordinates":[36.16589, -86.78444], "top_categories":[["Filler1", 90],["Filler2",80],["Filler3",70],["Filler4",60],["Filler5", 50]]},
+	"Philadelphia": {"coordinates":[39.95233, -75.16379], "top_categories":[["Filler1", 90],["Filler2",80],["Filler3",70],["Filler4",60],["Filler5", 50]]},
+	"Tampa": {"coordinates":[27.94752, -82.45843], "top_categories":[["Filler1", 90],["Filler2",80],["Filler3",70],["Filler4",60],["Filler5", 50]]},
+	"Tucson": {"coordinates":[32.22174,-110.92648], "top_categories":[["Filler1", 90],["Filler2",80],["Filler3",70],["Filler4",60],["Filler5", 50]]}
+}

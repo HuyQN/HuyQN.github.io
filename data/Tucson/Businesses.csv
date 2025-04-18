@@ -1,0 +1,11 @@
+business_id,name,address,longitude,latitude,sentiment
+busi0,bus inc0,0 Imagination Road,-110.91588,32.24628,98.67
+busi1,bus inc1,1 Imagination Road,-110.91,32.23323,94.22
+busi2,bus inc2,2 Imagination Road,-110.964,32.252599999999994,86.22
+busi3,bus inc3,3 Imagination Road,-110.96505,32.2499,94.99
+busi4,bus inc4,4 Imagination Road,-110.94098,32.210879999999996,81.68
+busi5,bus inc5,5 Imagination Road,-110.91169,32.20979,93.45
+busi6,bus inc6,6 Imagination Road,-110.90637,32.258829999999996,90.54
+busi7,bus inc7,7 Imagination Road,-110.94066,32.218819999999994,86.47
+busi8,bus inc8,8 Imagination Road,-110.96384,32.18895,96.14
+busi9,bus inc9,9 Imagination Road,-110.91797,32.25826,88.19
