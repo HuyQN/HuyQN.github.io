@@ -141,9 +141,11 @@
     const urlpara = new URLSearchParams(window.location.search)
     let city = urlpara.get("city")
     var categories = ["All","Italian","Indian","Chinese","Thai","Ethiopian"]
-    var load_cities =  d3.json("./data/cities.json")
-    var load_csv =  d3.csv("./data/"+city+"/Businesses.csv")
-    var load_default_reviews =  d3.csv("./data/"+city+"/Default_Reviews.csv")
+    var load_cities =  d3.json("/data/cities.json")
+    var load_csv =  d3.csv("/data/"+city+"/Businesses.csv")
+	console.log("/data/"+city+"/Businesses.csv")
+    var load_default_reviews =  d3.csv("/data/"+city+"/Default_Reviews
+	console.log().csv")
     Promise.all([load_cities, load_csv, load_default_reviews]).then(function(d){
       const city_json = d[0]
       const coord = city_json[city]["coordinates"]
