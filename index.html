@@ -11,7 +11,7 @@
       width: 400px;
     }
     .city {
-      height: 250px;
+      height: 300px;
       width: 600px;
     }
     body{
@@ -50,12 +50,12 @@
       var city_path = "/data/Cities.json"
       var heights = 250
 
-      var box_spots = [{"top": "300px", "left": "50px"},
-        {"top": "300px", "left": "650px"},
-        {"top": "300px", "left": "1250px"},
-        {"top": "600px", "left": "50px"},
-        {"top": "600px", "left": "650px"},
-        {"top": "600px", "left": "1250px"}
+      var box_spots = [{"top": "250px", "left": "50px"},
+        {"top": "250px", "left": "650px"},
+        {"top": "250px", "left": "1250px"},
+        {"top": "575px", "left": "50px"},
+        {"top": "575px", "left": "650px"},
+        {"top": "575px", "left": "1250px"}
       ]
 
       // replaced by csv or json function transformation
@@ -89,6 +89,13 @@
             .style("position","absolute")
             .style("top", function(d){ return positions[d].top})
             .style("left", function(d){ return positions[d].left})
+          div.append("div")
+            .style("width","400px")
+            .append("text")
+            .style("font-size", "25px")
+            .style("left","50%")
+            .style("text-align","center")
+            .text(function(d){return d})
           div.append("div")
             .attr("class", "map")
             .attr("id", function(d){ return d})
