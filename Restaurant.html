@@ -140,6 +140,10 @@
       color: #ee0;
       font-size: 30px;
     }
+    .res_star{
+      color: #ee0;
+      font-size: 40px;
+    }
   </style>   
 </head>
 
@@ -355,7 +359,7 @@
           // .attr("font-weight", 1000)
           // .attr("text-anchor","middle")
           rev.append("span")
-            .attr("class", "rating rev_star")
+            .attr("class", "rating res_star")
             .attr("data-default-rating",function(d){
               return items[i]['score']
             })
@@ -489,8 +493,6 @@
             business = cloud_dict[num]
           }
         }
-        console.log(business)
-        console.log(tokens)
         return business["word_data"][word].includes(tokens["review_id"])
       })
       var holder = d3.select(reviews_id)
@@ -589,11 +591,9 @@
         var sortest_list = cloud_dict.filter(function(data){
           return data["business_id"] == business_id
         })[0]
-        console.log(sortest_list)
         var word_json = sortest_list["word_data"]
         var keys = Object.keys(word_json)
         sorted_list = keys.map(function(d){ return [d, word_json[d][0], word_json[d].slice(1)]}).sort(function(a,b){return b[1]-a[1]})
-        console.log(sorted_list)
         var cloud = d3.select(holder)
           .append("svg")
           .attr("id","cloudsvg")
