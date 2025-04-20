@@ -567,6 +567,7 @@
             .remove()
           state = 1
         } else {
+          left_items= extra_items
           d3.select("#holder1")
             .remove()
           d3.select("#cloud_border")
@@ -575,6 +576,11 @@
             .style("top", "125px")
             .style("height", "calc(100% - 130px)")
             .attr("id", "holder1")
+            .on("scroll", function(){
+                    var diff = this.scrollHeight-this.scrollTop-this.clientHeight;
+                    if(diff <= 0){
+                      loadmore(left_items, "#holder1")
+                    }})
           d3.select("#rev_button")
             .attr("onclick","defaultReviews('#holder1')")
           d3.select("#cloud_border2")
@@ -590,7 +596,6 @@
             .attr("id",function(d){return this.id.replace("holder2", "holder1")})
             .attr("onclick", function(d){
               return this.getAttribute('onclick').replace("holder2", "holder1")})
-          left_items= extra_items
           state = 1
         }
       }
