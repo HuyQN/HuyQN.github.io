@@ -119,7 +119,7 @@
     }
     .rest_box{
       width:100%;
-      height: 75px;
+      height: 100x;
     }
     h3{
       margin:0px;
@@ -298,6 +298,10 @@
           .attr("class","review")
           .append("div")
           .attr("class", "inner_review")
+          rev.append("text")
+          .text(items[i]['date'])
+          .style("color", "#191970")
+          .style("float", "right")
           rev.append("h3")
           .text(items[i]["name"])
           .style("color", "#191970")
