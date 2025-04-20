@@ -258,11 +258,6 @@
       holder = d3.select(hold_id)
       curr_items = d3.selectAll(hold_id).selectAll(".review").size()
       for(var i=curr_items; i < Math.min(curr_items+5, items.length); i++){
-        console.log(i, items.length)
-        if(i>=items.length){
-          console.log("break")
-          break
-        }
         if(Object.keys(items[0]).includes("review_id")){
           var rev = holder.append("div")
           .attr("class","review")
@@ -279,7 +274,6 @@
           rev.append("text")
           .text(items[i]["text"])
         } else{
-          console.log(i, items.length)
         var rev = holder.append("div")
           .attr("class","review")
           .append("div")
@@ -515,6 +509,11 @@
             .attr("id", "cat_name")
           d3.select("#cat_box2")
             .attr("id", "cat_box")
+          d3.selectAll(".wordholder2")
+            .attr("class","wordholder1")
+            .attr("id",function(d){return this.id.replace("holder2", "holder1")})
+            .attr("onclick", function(d){
+              return this.getAttribute('onclick').replace("holder2", "holder1")})
           state = 1
         }
       }
@@ -525,7 +524,6 @@
         var sortest_list = d.map(function(data){
           return [data["token"], data["frequency"]]
         })
-        console.log(sortest_list)
         var cloud = d3.select(holder)
           .append("svg")
           .attr("id","cloudsvg")
@@ -564,7 +562,7 @@
         .attr("text-anchor", "middle")
         .attr("class", "word"+reviews_id.substring(1))
         .attr("id",function(d){return d.text+reviews_id.substring(1)})
-        .on("click",function(d){cloudWordClicked(d.text, reviews_id)})
+        .attr("onclick",function(d){return "cloudWordClicked('"+d.text+"', '"+reviews_id+"')"})
         .attr("transform", function(d) {
           return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
         })
