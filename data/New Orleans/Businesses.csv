@@ -1,11 +1,11 @@
-business_id,name,address,longitude,latitude,sentiment
-busi0,bus inc0,0 Imagination Road,-90.10200999999999,29.99678,88.02
-busi1,bus inc1,1 Imagination Road,-90.11997,29.92762,97.07
-busi2,bus inc2,2 Imagination Road,-90.05221,29.99761,85.63
-busi3,bus inc3,3 Imagination Road,-90.11424,29.96554,84.06
-busi4,bus inc4,4 Imagination Road,-90.09062999999999,29.919420000000002,94.23
-busi5,bus inc5,5 Imagination Road,-90.12057999999999,29.97246,81.48
-busi6,bus inc6,6 Imagination Road,-90.06461999999999,29.99239,92.1
-busi7,bus inc7,7 Imagination Road,-90.08538,29.96708,84.43
-busi8,bus inc8,8 Imagination Road,-90.03363999999999,29.973580000000002,81.57
-busi9,bus inc9,9 Imagination Road,-90.04138999999999,29.98938,81.67
+business_id,name,ranking,score, city,latitude,longitude,address
+YxrHNjPHfha1h2Kvm_G0w,The Blue Flamingo Sports Bar & Grill,1,4.524906193,New Orleans,30.051303,-89.979404,"10800 Hayne Blvd"
+7k-tfmFwqgPYPMIGik4HIg,American Townhouse,2,4.428742765,New Orleans,29.9630033685,-90.0657422869,"1012 N Rampart St"
+JVDkpFxbc_j49Wvxk5CtVA,Pluck Wines,3,4.227135517,New Orleans,29.947285,-90.072003,"722 Girod St"
+AP2UC4jid1vxI7Mu_Y1sXQ,Bywater Brew Pub,4,4.198240014,New Orleans,29.9636904,-90.046948,"3000 Royal St"
+kuQ-hmZHQa2VXeFyJwew5A,Taqueria La lucha,5,4.12978226,New Orleans,29.9421729105,-90.0678311178,"404 Andrew Higgins Blvd"
+rrd9QThX5G728RprMsxcGA,Commons Club,6,4.129308002,New Orleans,29.948945,-90.0731349,"550 Baronne St"
+LwBLK_hNI72tZYzuhYp0eQ,Zhang Bistro,7,3.997762946,New Orleans,29.9606831671,-90.0593876919,"1141 Decatur St"
+7uFQqkUJUNu8XBo1nh8DTw,Pomelo NOLA,8,3.961690763,New Orleans,29.9211388,-90.0984265,"4113 Magazine St"
+3CcQS_pHoq9RPaOWYlo_7Q,Elizabeth Street Cafe,9,3.912572218,New Orleans,29.9342468696,-90.0729055707,"1507 Magazine St"
+q1whmG4Jdift2yL5nSJR_Q,Hangout Ramen,10,3.895401588,New Orleans,29.948753049,-90.1285501,"1340 S Carrollton Ave"

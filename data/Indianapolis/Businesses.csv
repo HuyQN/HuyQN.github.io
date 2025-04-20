@@ -1,11 +1,11 @@
-business_id,name,address,longitude,latitude,sentiment
-busi0,bus inc0,0 Imagination Road,-86.11327,39.72309,98.5
-busi1,bus inc1,1 Imagination Road,-86.12294,39.75665,90.4
-busi2,bus inc2,2 Imagination Road,-86.12208,39.77519,96.58
-busi3,bus inc3,3 Imagination Road,-86.13633,39.72314,93.6
-busi4,bus inc4,4 Imagination Road,-86.17744,39.74781,80.04
-busi5,bus inc5,5 Imagination Road,-86.19624,39.80017,97.4
-busi6,bus inc6,6 Imagination Road,-86.2073,39.79301,98.34
-busi7,bus inc7,7 Imagination Road,-86.19392,39.74789,91.19
-busi8,bus inc8,8 Imagination Road,-86.16916,39.731700000000004,99.32
-busi9,bus inc9,9 Imagination Road,-86.16667,39.78345,97.56
+business_id,name,ranking,score, city,latitude,longitude,address
+kkPK9JSs8KKH9qv2r7fppA,Brew Link Brewing,1,4.257982593,Indianapolis,39.7772342,-86.161783,"714 N Capitol Ave"
+rR30b1XWbxZFFgLyGbfNAw,BODHI : Craft Bar + Thai Bistro,2,4.254011857,Indianapolis,39.7802203,-86.1418027,"922 Massachusetts Ave"
+UUoka-603Rj3QpDwfDVz0Q,One Trick Pony,3,4.243746449,Indianapolis,39.8693211,-86.1406647537,"1021 Broad Ripple Ave"
+kWbCmkx7Pd1kzHDT919FLA,La Eskina Indy,4,4.159054756,Indianapolis,39.7578225132,-86.1460964787,"641 Virginia Ave"
+"4ihK-CfFXNVIxN_twd63ZQ",Raw Bar By Slapfish,5,4.1525403,Indianapolis,39.7718154795,-86.153038,"339 Massachusetts Ave"
+qvGoBKNSoW6PW1eE0C3t6A,Shake Shack,6,4.117812265,Indianapolis,39.7712478,-86.1548176,"167 E New York St"
+"09MbQUOI4TQjw7N_rT4qqQ",Poke Guru,7,4.093587624,Indianapolis,39.7855027104,-86.1836186435,"1220 Waterway Blvd"
+jqnl080wAOhOhyCMrYddhw,Mexico City Kitchen,8,4.062817184,Indianapolis,39.8026065824,-86.2682071888,"6144 W 25th St"
+dEaUsmQSYKV7BCsVEW7cYQ,Healthy Soul Indy,9,4.047737362,Indianapolis,39.7849106,-86.1843391,"1220 Waterway Blvd, Ste 7"
+yihYQeo1YN6chq7uBtk7mQ,The Hulman,10,4.00597751,Indianapolis,39.7668308732,-86.1547474,"141 E Washington St"

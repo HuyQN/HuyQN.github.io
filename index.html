@@ -95,62 +95,62 @@
             .append("a")
             .attr("href", function(d){return "Restaurant.html?city="+d})
             .attr("class", "clickDiv")
-          var map_svg = div.append("svg")
-            .attr("transform", "translate("+405+",-"+heights+")")
-            .attr("class","bars")
-            .attr("width", 200)
-            .attr("height", heights)
-            map_svg.append("g")
-              .selectAll("rect")
-            .data(function(d){ 
-              var top_cats = data[d]["top_categories"]
-              var ret = []
-              for(const num in top_cats){
-                ret[num] = [num, top_cats[num]]
-              }
-              return ret
-            })
-            .enter()
-            .append("rect")
-            .attr("y", function(d){return rectPadding + d[0] * (rectHeight + rectPadding) })
-            .attr("width", function(d){
-              // TODO: change for incoming value and acccount for year
-              return d[1][1]
-            })
-            .attr("height", rectHeight)
-            map_svg.append("g")
-            .selectAll("text")
-            .data(function(d){ 
-              var top_cats = data[d]["top_categories"]
-              var ret = []
-              for(const num in top_cats){
-                ret[num] = [num, top_cats[num]]
-              }
-              return ret
-            })
-            .enter()
-            .append("text")
-            .attr("y", function(d){return rectPadding + d[0] * (rectHeight + rectPadding) + rectHeight / 2 + 5}) 
-            .attr("x", 5)
-            .text(function(d){return d[1][1]})
-            .attr("text-anchor", "left")
+          // var map_svg = div.append("svg")
+          //   .attr("transform", "translate("+405+",-"+heights+")")
+          //   .attr("class","bars")
+          //   .attr("width", 200)
+          //   .attr("height", heights)
+          //   map_svg.append("g")
+          //     .selectAll("rect")
+          //   .data(function(d){ 
+          //     var top_cats = data[d]["top_categories"]
+          //     var ret = []
+          //     for(const num in top_cats){
+          //       ret[num] = [num, top_cats[num]]
+          //     }
+          //     return ret
+          //   })
+          //   .enter()
+          //   .append("rect")
+          //   .attr("y", function(d){return rectPadding + d[0] * (rectHeight + rectPadding) })
+          //   .attr("width", function(d){
+          //     // TODO: change for incoming value and acccount for year
+          //     return d[1][1]
+          //   })
+          //   .attr("height", rectHeight)
+          //   map_svg.append("g")
+          //   .selectAll("text")
+          //   .data(function(d){ 
+          //     var top_cats = data[d]["top_categories"]
+          //     var ret = []
+          //     for(const num in top_cats){
+          //       ret[num] = [num, top_cats[num]]
+          //     }
+          //     return ret
+          //   })
+          //   .enter()
+          //   .append("text")
+          //   .attr("y", function(d){return rectPadding + d[0] * (rectHeight + rectPadding) + rectHeight / 2 + 5}) 
+          //   .attr("x", 5)
+          //   .text(function(d){return d[1][1]})
+          //   .attr("text-anchor", "left")
 
-            map_svg.append("g")
-            .selectAll("text")
-            .data(function(d){ 
-              var top_cats = data[d]["top_categories"]
-              var ret = []
-              for(const num in top_cats){
-                ret[num] = [num, top_cats[num]]
-              }
-              return ret
-            })
-            .enter()
-            .append("text")
-            .attr("y", function(d){return rectPadding + d[0] * (rectHeight + rectPadding) + rectHeight / 2 + 5}) 
-            .attr("x", function(d){return d[1][1]+5})
-            .text(function(d){return d[1][0]})
-            .attr("text-anchor", "left")
+          //   map_svg.append("g")
+          //   .selectAll("text")
+          //   .data(function(d){ 
+          //     var top_cats = data[d]["top_categories"]
+          //     var ret = []
+          //     for(const num in top_cats){
+          //       ret[num] = [num, top_cats[num]]
+          //     }
+          //     return ret
+          //   })
+          //   .enter()
+          //   .append("text")
+          //   .attr("y", function(d){return rectPadding + d[0] * (rectHeight + rectPadding) + rectHeight / 2 + 5}) 
+          //   .attr("x", function(d){return d[1][1]+5})
+          //   .text(function(d){return d[1][0]})
+          //   .attr("text-anchor", "left")
 
           for(count = 0; count < city_list.length; count++){
             map_id = city_list[count]

@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/SimpleStarRating/SimpleStarRating.css">
   <script type="text/javascript" src="/lib/d3.layout.cloud.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <style>
@@ -58,7 +59,7 @@
       right: 25px;
     }
     #map{
-      background-color: blue;
+      background-color: gray;
       margin-left: 5px;
       margin-right: 5px;
       margin-top: 5px;
@@ -99,12 +100,13 @@
       top: 5px;
       text-align: center;
       width: 100%;
-      font-size: 30px;
+      font-size: 40px;
       display: block;
     }
     .review{
       width:100%;
-      height: 200px;
+      display: flex;
+    flex-direction: column;
       border-bottom: 2px solid black;
     }
     .inner_review{
@@ -125,12 +127,25 @@
     .cloud{
       z-index: 50;
     }
-    
+    text{
+      font-family: Arial;
+    }
+    h2{
+      font-family: Arial;
+    }
+    h3{
+      font-family: Arial;
+    }
+    .rev_star{
+      color: #ee0;
+      font-size: 30px;
+    }
   </style>   
 </head>
 
 <body>
   <script type="text/javascript" src="/lib/d3.v5.min.js"></script>
+  <script src="/lib/SimpleStarRating/SimpleStarRating.js"></script>
   <button class="home_button" onclick="location.href='index.html'">Home</button>
   <h1>Team 37</h1>
   <script>
@@ -138,6 +153,7 @@
     let bus_list
     let left_items
     let default_items
+    let cloud_dict
     let state = 0
     let extra_items
     let half_height = "calc(50% - 70px)"
@@ -146,18 +162,29 @@
     var categories = ["All","Italian","Indian","Chinese","Thai","Ethiopian"]
     var load_cities =  d3.json("data/Cities.json")
     var load_csv =  d3.csv("data/"+city+"/Businesses.csv")
-    var load_default_reviews =  d3.csv("data/"+city+"/Default_Reviews.csv")
-    Promise.all([load_cities, load_csv, load_default_reviews]).then(function(d){
+    var cloud_filename = "data/"+city+"/cloud.csv"
+    var load_cloud =  d3.dsv("|",cloud_filename)
+    
+    Promise.all([load_cities, load_csv, load_cloud]).then(function(d){
       const city_json = d[0]
       const coord = city_json[city]["coordinates"]
+      cloud_dict = d[2]
+      for(const cloud in cloud_dict){
+        if(cloud != "columns"){
+          cloud_dict[cloud]["word_data"] = JSON.parse(cloud_dict[cloud]["word_data"])
+        }
+      }
       bus_list = d[1]
       default_items = d[1].sort(function(a,b){
-          return parseFloat(b["sentiment"])-parseFloat(a["sentiment"])
+          return parseFloat(b["score"])-parseFloat(a["score"])
         })
       left_items = default_items
+      d3.select("body")
+        .style("background-color", "#FFEECF")
       review_d3 = d3.select("body")
                   .append("div")
                   .attr("class","reviews_holder")
+                  .style("background-color","#A7ACD9")
                   .attr("id","holder1")
                   .on("scroll", function(){
                     var diff = this.scrollHeight-this.scrollTop-this.clientHeight;
@@ -168,8 +195,10 @@
       var cat_box = review_d3.append("div")
             .attr("id","cat_box")
             .attr("class","rest_box")
+            .style("background-color","#A7ACD9")
 
         cat_box.append("text")
+        .style("color", "#191970")
             .attr("id","cat_name")
             .attr("class", "rest_name")
             .text("All")
@@ -194,6 +223,7 @@
                   .append("div")
                   .attr("id","cloud_border")
                   .attr("class", "cloud_box")
+                  .style("background-color", "#A7ACD9")
       map_d3 =map_border.append("div")
                   .attr("id","map")
       map_border.append("button")
@@ -207,9 +237,10 @@
         minZoom: 10,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       }).addTo(map);
-
-      for(const bus in bus_list.slice(0, -1)){
-        markBusiness(map, bus_list[bus])
+      for(const bus in bus_list){
+        if(bus != "columns"){
+          markBusiness(map, bus_list[bus])
+        }
       }
       loadmore(left_items, "#holder1")
     })
@@ -263,15 +294,25 @@
           .attr("class","review")
           .append("div")
           .attr("class", "inner_review")
-          rev.append("div")
-          .append("h3")
-          .attr("text-anochor", "right")
-          .style("float","right")
-          .text(items[i]["sentiment"])
           rev.append("h3")
-          .text(items[i]["username"])
+          .text(items[i]["name"])
+          .style("color", "#191970")
           .style("width","75%")
+          rev.append("div")
+          .append("span")
+            .attr("class", "rating rev_star")
+            .attr("data-default-rating",function(d){
+              return items[i]['stars']
+            })
+            .attr("disabled","")
+            .style("color","golden")
+            .each(function(d){
+              new SimpleStarRating(this)
+            }
+            )
           rev.append("text")
+          .style("color", "#191970")
+          
           .text(items[i]["text"])
         } else{
         var rev = holder.append("div")
@@ -286,33 +327,46 @@
           //   console.log(busname)
           //   clickBusiness(busname)})
           rev.append("h2")
-            .style("color","blue")
             .text(items[i]["name"])
+            .style("color", "#191970")
           rev.append("h3")
-            .style("color","blue")
             .text(items[i]["address"])
-          var rev_svg = rev.append("svg")
-          .attr("width","100%")
-          rev_svg.append("rect")
-          .attr("width","100%")
-          .attr("height","30px")
-          .style("fill","red")
-          rev_svg.append("rect")
-          .attr("width",(items[i]["sentiment"])+"%")
-          .attr("height","30px")
-          .attr("z-index","101")
-          .style("fill","green")
-          rev_svg.append("text")
-          .text(items[i]["sentiment"])
-          .attr("text-anochor", "left")
-          .attr("z-index","102")
-          .attr("x","50%")
-          .attr("y", 22)
-          .attr("font-size",23)
-          .attr("font-weight", 1000)
-          .attr("text-anchor","middle")
+            .style("color", "#191970")
+          // var rev_svg = rev.append("svg")
+          // .attr("width","100%")
+          // .attr("height", "100px")
+          // rev_svg.append("rect")
+          // .attr("width","100%")
+          // .attr("height","30px")
+          // .style("fill","red")
+          // rev_svg.append("rect")
+          // .attr("width",(items[i]["sentiment"])+"%")
+          // .attr("height","30px")
+          // .attr("z-index","101")
+          // .style("fill","green")
+          // rev_svg.append("text")
+          // .style("color", "#191970")
+          // .text(items[i]["sentiment"])
+          // .attr("text-anochor", "left")
+          // .attr("z-index","102")
+          // .attr("x","50%")
+          // .attr("y", 22)
+          // .attr("font-size",23)
+          // .attr("font-weight", 1000)
+          // .attr("text-anchor","middle")
+          rev.append("span")
+            .attr("class", "rating rev_star")
+            .attr("data-default-rating",function(d){
+              return items[i]['score']
+            })
+            .attr("disabled","")
+            .style("color","golden")
+            .each(function(d){
+              new SimpleStarRating(this)
 
-        }
+            }
+            )
+          }
       }
       if(Object.keys(items[0]).includes("review_id")){
         holder.selectAll("button")
@@ -331,6 +385,7 @@
       review_d3 = d3.select("body")
                   .append("div")
                   .attr("class","reviews_holder")
+                  .style("background-color","#A7ACD9")
                   .style("height", half_height)
                   .style("top", "calc(50% + 65px)")
                   .attr("id","holder2")
@@ -344,14 +399,17 @@
                   .append("div")
                   .attr("id","cloud_border2")
                   .attr("class", "cloud_box")
+                  .style("background-color", "#A7ACD9")
                   .style("height", half_height)
                   .style("top", "calc(50% + 65px)")
 
           var cat_box = review_d3.append("div")
             .attr("id","cat_box2")
             .attr("class","rest_box")
+            .style("background-color","#A7ACD9")
 
         cat_box.append("text")
+        .style("color", "#191970")
             .attr("id","cat_name2")
             .attr("class","rest_name")
             .text(business_name)
@@ -417,7 +475,7 @@
       }
     }
 
-    function cloudWordClicked(word, reviews_id){
+    function cloudWordClicked(word, reviews_id, business_id){
       var items 
       if(reviews_id == "#holder2"){
         items = extra_items
@@ -425,12 +483,20 @@
         items = left_items
       }
       var filtered = items.filter(function(tokens){
-        return tokens["tokenize"].includes(word)
+        business = NaN
+        for(const num in cloud_dict){
+          if(business_id == cloud_dict[num]["business_id"]){
+            business = cloud_dict[num]
+          }
+        }
+        console.log(business)
+        console.log(tokens)
+        return business["word_data"][word].includes(tokens["review_id"])
       })
       var holder = d3.select(reviews_id)
-      if(d3.select("#"+word+reviews_id.substring(1)).style("fill") == "blue"){
+      if(d3.select("#"+word+reviews_id.substring(1)).style("fill") == "#2B59C3"){
         d3.select("#"+word+reviews_id.substring(1))
-        .style("fill", "black")
+        .style("fill", "#22031F")
 
         holder.selectAll(".review")
           .remove()
@@ -448,9 +514,9 @@
           })
       } else {
         d3.selectAll(".word"+reviews_id.substring(1))
-        .style("fill", "black")
+        .style("fill", "#2B59C3")
        d3.select("#"+word+reviews_id.substring(1))
-        .style("fill", "blue")
+        .style("fill", "#22031F")
         holder.selectAll(".review")
           .remove()
         setTimeout(function() {
@@ -520,10 +586,14 @@
     }
 
     function create_cloud(holder, business_id, reviews_id){
-      d3.csv("data/"+city+"/"+business_id+"_Cloud.csv").then(function(d){
-        var sortest_list = d.map(function(data){
-          return [data["token"], data["frequency"]]
-        })
+        var sortest_list = cloud_dict.filter(function(data){
+          return data["business_id"] == business_id
+        })[0]
+        console.log(sortest_list)
+        var word_json = sortest_list["word_data"]
+        var keys = Object.keys(word_json)
+        sorted_list = keys.map(function(d){ return [d, word_json[d][0], word_json[d].slice(1)]}).sort(function(a,b){return b[1]-a[1]})
+        console.log(sorted_list)
         var cloud = d3.select(holder)
           .append("svg")
           .attr("id","cloudsvg")
@@ -532,13 +602,13 @@
           .append("g")
         var layout = d3.layout.cloud()
           .size([1300,400])
-          .words(sortest_list.map(function(d){ return {text: d[0]}}))
+          .words(sorted_list.map(function(d){ return {text: d[0]}}))
           .padding(5)
           .fontSize(function(d) { 
-            size = sortest_list.find((item) => item[0]==d.text)[1]
-            size = Math.sqrt(size) * 6 + 20
+            size = sorted_list.find((item) => item[0]==d.text)[1]
+            size = Math.sqrt(size) * 8 + 10
             return size})
-          .on("end", function(d){ draw(d,cloud, layout, reviews_id)})
+          .on("end", function(d){ draw(d,cloud, layout, reviews_id, business_id)})
           layout.start()
           // cloud.transition()
           //       .duration(600)
@@ -547,22 +617,22 @@
           //           return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
           //       })
           //       .style("fill-opacity", 1);
-      })
     }
 
-    function draw(words, svg, layout, reviews_id){
+    function draw(words, svg, layout, reviews_id, business_id){
       svg.append("g")
       .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
        .selectAll("text")
         .data(words)
         .enter()
         .append("text")
+        .style("fill", "#2B59C3")
         .style("font-family", "Impact")
         .style("font-size", function(d) { return d.size + "px"; })
         .attr("text-anchor", "middle")
         .attr("class", "word"+reviews_id.substring(1))
         .attr("id",function(d){return d.text+reviews_id.substring(1)})
-        .attr("onclick",function(d){return "cloudWordClicked('"+d.text+"', '"+reviews_id+"')"})
+        .attr("onclick",function(d){return "cloudWordClicked('"+d.text+"', '"+reviews_id+"','"+business_id+"')"})
         .attr("transform", function(d) {
           return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
         })

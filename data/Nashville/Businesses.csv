@@ -1,11 +1,11 @@
-business_id,name,address,longitude,latitude,sentiment
-busi0,bus inc0,0 Imagination Road,-86.76704000000001,36.12902,80.76
-busi1,bus inc1,1 Imagination Road,-86.75688000000001,36.15931,87.2
-busi2,bus inc2,2 Imagination Road,-86.78803,36.195899999999995,92.79
-busi3,bus inc3,3 Imagination Road,-86.78138,36.19345,96.93
-busi4,bus inc4,4 Imagination Road,-86.83048000000001,36.20393,81.72
-busi5,bus inc5,5 Imagination Road,-86.79641000000001,36.127449999999996,85.39
-busi6,bus inc6,6 Imagination Road,-86.81831,36.19303,90.95
-busi7,bus inc7,7 Imagination Road,-86.82206000000001,36.20787,86.11
-busi8,bus inc8,8 Imagination Road,-86.83339000000001,36.141459999999995,95.95
-busi9,bus inc9,9 Imagination Road,-86.76959000000001,36.163109999999996,83.76
+business_id,name,ranking,score, city,latitude,longitude,address
+"22Zhfb78DHpyDlAAnfU1LQ",Bringles Smoking Oasis,1,4.328505502,Nashville,36.1623195,-86.8469936,"4901 Centennial Blvd, Nations"
+"00FlwcHcngPcmMHzUnXetA",The Authentique,2,4.272724857,Nashville,36.1877579617,-86.7463213882,"925 Gallatin Ave"
+qepgYnobwEyWr4oAfDDhyw,Succulent Vegan Tacos,3,4.122096092,Nashville,36.1706189,-86.7888584,"900 Rosa L Parks Blvd"
+KPofPh5SmzKumg-PpbAEYw,Frida’s Oaxacan Cuisine,4,4.088903884,Nashville,36.1194859,-86.7491146,"2424 Nolensville Pike"
+jf2eOxyT1tlA1lyqKavPXA,Calacas Mexican Cuisine,5,4.085465268,Nashville,36.1563043,-86.7755399,"411 Korean Veterans Blvd"
+a7XBfJd0aEo-UpPXetH2JA,Taqueria El Gym,6,4.054736188,Nashville,36.1110416835,-86.742458376,"234 Thompson Ln"
+uPsFg_EG4sgrkimoRrBNOA,Family Tacos,7,4.033979096,Nashville,36.1526501817,-86.8389412961,"4304 Charlotte Ave"
+qp7cJWwx5-j45fLGLYsn_Q,Pokeworks,8,4.0044159,Nashville,36.1632989,-86.7910443,"416 11th Ave N"
+Y8djj3w2NPUkR5PoXwM4cA,Boston Commons,9,3.970016524,Nashville,36.17697293,-86.7508104023,"1008 Woodland St, Ste A"
+PRK5CTAOyidhiICu5fZwdg,Koi Sushi & Thai Midtown,10,3.944030288,Nashville,36.15095,-86.80481,"2214 Elliston Pl"

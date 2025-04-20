@@ -1,11 +1,11 @@
-business_id,name,address,longitude,latitude,sentiment
-busi0,bus inc0,0 Imagination Road,-110.91875999999999,32.198229999999995,93.79
-busi1,bus inc1,1 Imagination Road,-110.92365,32.240719999999996,89.27
-busi2,bus inc2,2 Imagination Road,-110.88698,32.26291,80.87
-busi3,bus inc3,3 Imagination Road,-110.88852,32.18221,89.26
-busi4,bus inc4,4 Imagination Road,-110.87673,32.26356,95.56
-busi5,bus inc5,5 Imagination Road,-110.96755999999999,32.233169999999994,99.27
-busi6,bus inc6,6 Imagination Road,-110.89829999999999,32.220589999999994,93.57
-busi7,bus inc7,7 Imagination Road,-110.90258,32.176739999999995,91.03
-busi8,bus inc8,8 Imagination Road,-110.97216,32.24825,94.23
-busi9,bus inc9,9 Imagination Road,-110.95448999999999,32.231559999999995,92.11
+business_id,name,ranking,score, city,latitude,longitude,address
+DadnCMDdFEct8m4rf5H9YA,The Jackrabbit Lounge,1,4.321760281,Tucson,32.2463566183,-110.9777080663,"2000 N Oracle Rd"
+fNidADY3MgFJaOBzUvm1bg,Fat Willy’s Clubouse,2,4.258182669,Tucson,32.0920025935,-110.8371410709,"8701 S Kolb Rd"
+kxvW5Mfebywb0L1HTHdX3g,Buendia Breakfast & Lunch Cafe,3,4.223381456,Tucson,32.2530082247,-110.9605596,"2530 N First Ave"
+UWj1wJFLWCfqVN3Z6gg2DA,Red Light Lounge,4,4.199396077,Tucson,32.2152497,-110.9697339,"485 S Stone Ave"
+"8dZbYgJxNgKd9G3kHWmQ6w",Frida's Cafe,5,4.127469312,Tucson,32.2497514392,-110.8740422463,"5526 E Grant Rd"
+BOeBIWjryCt0EyrlAeqTMA,Meyer Avenue Cafe,6,4.107992543,Tucson,32.2166338,-110.9729938,"353 S Meyer Ave"
+rEeNRMhsz_XMoyFHhcLhxw,La Chingada Cocina Mexicana,7,4.011748324,Tucson,32.2231151448,-110.9692217,"110 E Pennington St"
+Q28TlneXws1shf8ymTdxtg,Funland Raspados And Munchies,8,3.987789248,Tucson,32.2511453516,-111.0123500904,"2100 W Grant Rd, Ste 110"
+Ruc9mHL5JkOE6PHWghx2gQ,El Mezquite Grill & Taqueria,9,3.971061168,Tucson,32.2171325135,-110.9732703939,"280 S Church Ave"
+tpvHimO4BBn1QMPQL02B7A,Barrio Charro,10,3.962696452,Tucson,32.273821,-110.9444336,"3699 N Campbell Ave"

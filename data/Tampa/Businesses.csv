@@ -1,11 +1,11 @@
-business_id,name,address,longitude,latitude,sentiment
-busi0,bus inc0,0 Imagination Road,-82.41784000000001,27.980600000000003,94.73
-busi1,bus inc1,1 Imagination Road,-82.49856000000001,27.995540000000002,95.42
-busi2,bus inc2,2 Imagination Road,-82.44317000000001,27.944850000000002,83.35
-busi3,bus inc3,3 Imagination Road,-82.50181,27.992250000000002,81.68
-busi4,bus inc4,4 Imagination Road,-82.47646,27.970390000000002,93.94
-busi5,bus inc5,5 Imagination Road,-82.41379,27.952080000000002,90.33
-busi6,bus inc6,6 Imagination Road,-82.42755000000001,27.9636,91.31
-busi7,bus inc7,7 Imagination Road,-82.49495,27.91488,95.98
-busi8,bus inc8,8 Imagination Road,-82.42619,27.92183,89.25
-busi9,bus inc9,9 Imagination Road,-82.41511000000001,27.965310000000002,97.5
+business_id,name,ranking,score, city,latitude,longitude,address
+cREv_k18uVKAv0cbsuOMpQ,Los Tacos Mariachis,1,4.275967564,Tampa,27.9496507,-82.3615025,"8505 E Adamo Dr"
+yfLlpU8h1plvnMgui6xwRw,The Brisket Shoppe,2,4.26452121,Tampa,27.9704909805,-82.484610951,"3501 N Armenia Ave"
+Z4o3FbBeRjyvYzIvQ2Z_jg,Happy Crab,3,4.242181072,Tampa,27.9956016656,-82.4354496908,"2115 E Hillsborough Ave, Ste 3"
+G2G-h_TjNLXzI5FCbaqQA,Oishi Sushi Bar,4,4.236078924,Tampa,28.0294511,-82.6389846,"12856 W Hillsborough Ave"
+kpF8q97-b2MDjmnJl74A1Q,Sa Ri One Kitchen,5,4.19108578,Tampa,28.0566179,-82.4268442,"11842 Bruce B Downs Blvd"
+GOcny-tWlN3jKk0AjHeAug,The Grill At Morris Bridge,6,4.138779526,Tampa,28.145446,-82.2840637,"10920 Cross Creek Blvd"
+h-0hwjiPSiWQD0UXgAy1_g,Island Fin Poke,7,4.004287284,Tampa,28.0639851,-82.5028018,"12913 N Dale Mabry Hwy Ste 101 Tampa"
+X2xFkUWs2_cJxoYwh2cB6w,BluWave Sushi,8,3.99180496,Tampa,27.9143301,-82.5270557927,"3339 S Westshore Blvd"
+jrUso5L85sDzeBj7KqLhJg,Poké Island Plus,9,3.97870148,Tampa,28.1399525129,-82.357518838,"8636 Hunters Village Rd"
+FzsdmAlIGU8xsK4IcdBEMg,Junmai Station,10,3.96728012,Tampa,27.9481317205,-82.4566887129,"Hyatt House / Hyatt Pl, 325 N Florida Ave"
