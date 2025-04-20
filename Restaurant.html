@@ -529,6 +529,7 @@
         holder.selectAll(".review")
           .remove()
         setTimeout(function() {
+          console.log(filtered, reviews_id)
           loadmore(filtered, reviews_id)
           }, 100
         );
@@ -589,6 +590,7 @@
             .attr("id",function(d){return this.id.replace("holder2", "holder1")})
             .attr("onclick", function(d){
               return this.getAttribute('onclick').replace("holder2", "holder1")})
+          left_items= extra_items
           state = 1
         }
       }
