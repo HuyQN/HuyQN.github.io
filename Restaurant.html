@@ -427,7 +427,8 @@
     }
     
     function markBusiness(map, business){
-      marker = new L.marker([business["latitude"], business["longitude"]]).bindPopup("<span onClick=\"clickBusiness(\'"+business['business_id']+"\')\"><b>"+business["name"]+"</b><br>"+business["address"]+"</span>").addTo(map)
+      marker = new L.marker([business["latitude"], business["longitude"]]).bindPopup("<span onClick=\"clickBusiness(\'"+business['business_id']+"\')\"><b>"+business["name"]+"</b><br>"+business["address"]+"</span>")
+      marker.addTo(map)
     }
 
     function clickBusiness(business){
@@ -500,9 +501,10 @@
         return business["word_data"][word].includes(tokens["review_id"])
       })
       var holder = d3.select(reviews_id)
-      if(d3.select("#"+word+reviews_id.substring(1)).style("fill") == "#2B59C3"){
+      if(d3.select("#"+word+reviews_id.substring(1)).style("fill") == "rgb(34, 3, 31)"){
+        console.log("test")
         d3.select("#"+word+reviews_id.substring(1))
-        .style("fill", "#22031F")
+        .style("fill", "#2B59C3")
 
         holder.selectAll(".review")
           .remove()
